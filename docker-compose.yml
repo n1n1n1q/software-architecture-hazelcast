@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  hz-node1:
+    image: hazelcast/hazelcast:5.6.0
+    ports:
+      - "5701:5701"
+    networks:
+      - hazelcast-network
+    volumes:
+      - ./hazelcast.xml:/opt/hazelcast/config/hazelcast.xml
+    environment:
+      - HZ_CLUSTERNAME=hello-world
+
+  hz-node2:
+    image: hazelcast/hazelcast:5.6.0
+    ports:
+      - "5702:5701"
+    networks:
+      - hazelcast-network
+    volumes:
+      - ./hazelcast.xml:/opt/hazelcast/config/hazelcast.xml
+    environment:
+      - HZ_CLUSTERNAME=hello-world
+
+  hz-node3:
+    image: hazelcast/hazelcast:5.6.0
+    ports:
+      - "5703:5701"
+    networks:
+      - hazelcast-network
+    volumes:
+      - ./hazelcast.xml:/opt/hazelcast/config/hazelcast.xml
+    environment:
+      - HZ_CLUSTERNAME=hello-world
+
+networks:
+  hazelcast-network:
+    driver: bridge
