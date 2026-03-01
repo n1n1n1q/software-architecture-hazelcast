@@ -1,7 +1,7 @@
 import hazelcast
 import threading
 
-def consume(client):
+def consume(client, client_id):
     queue = client.get_queue("bounded-queue").blocking()
     while True:
         value = queue.take()
@@ -9,7 +9,7 @@ def consume(client):
             queue.put(-1)
             print("Poison pill taken")
             break
-        print(f"Read {value}")
+        print(f"Read {value}, client {client_id}")
 
 def produce(client):
     queue = client.get_queue("bounded-queue").blocking()
@@ -25,8 +25,8 @@ if __name__ == "__main__":
     client3 = hazelcast.HazelcastClient(cluster_name="hello-world")
 
     thread_producer= threading.Thread(target=produce, args=(client1,))
-    thread_consumer1 = threading.Thread(target=consume, args=(client2,))
-    thread_consumer2 = threading.Thread(target=consume, args=(client3,))
+    thread_consumer1 = threading.Thread(target=consume, args=(client2, 2, ))
+    thread_consumer2 = threading.Thread(target=consume, args=(client3, 3, ))
 
     thread_producer.start()
     thread_consumer1.start()
