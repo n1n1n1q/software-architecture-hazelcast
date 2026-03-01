@@ -2,7 +2,7 @@ import hazelcast
 import threading
 
 def consume(client):
-    queue = client.get_queue("queue").blocking()
+    queue = client.get_queue("bounded-queue").blocking()
     while True:
         value = queue.take()
         if value == -1:
@@ -12,7 +12,7 @@ def consume(client):
         print(f"Read {value}")
 
 def produce(client):
-    queue = client.get_queue("queue").blocking()
+    queue = client.get_queue("bounded-queue").blocking()
     for i in range(1, 101):
         queue.put(i)
         print(f"Put {i}")

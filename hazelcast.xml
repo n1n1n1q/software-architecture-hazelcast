@@ -17,9 +17,9 @@
             <multicast enabled="false"/>
             <tcp-ip enabled="true">
                 <member-list>
-                    <member>hz-node1</member>
-                    <member>hz-node2</member>
-                    <member>hz-node3</member>
+                    <member>192.168.88.14:5701</member>
+                    <member>192.168.88.14:5702</member>
+                    <member>192.168.88.14:5703</member>
                 </member-list>
             </tcp-ip>
         </join>

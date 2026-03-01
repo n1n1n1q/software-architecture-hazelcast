@@ -8,7 +8,7 @@ services:
     networks:
       - hazelcast-network
     volumes:
-      - ./hazelcast.xml:/opt/hazelcast/config/hazelcast.xml
+      - ./hazelcast.xml:/opt/hazelcast/config/hazelcast-docker.xml
     environment:
       - HZ_CLUSTERNAME=hello-world
 
@@ -19,7 +19,7 @@ services:
     networks:
       - hazelcast-network
     volumes:
-      - ./hazelcast.xml:/opt/hazelcast/config/hazelcast.xml
+      - ./hazelcast.xml:/opt/hazelcast/config/hazelcast-docker.xml
     environment:
       - HZ_CLUSTERNAME=hello-world
 
@@ -30,9 +30,19 @@ services:
     networks:
       - hazelcast-network
     volumes:
-      - ./hazelcast.xml:/opt/hazelcast/config/hazelcast.xml
+      - ./hazelcast.xml:/opt/hazelcast/config/hazelcast-docker.xml
     environment:
       - HZ_CLUSTERNAME=hello-world
+
+  management-center:
+    image: hazelcast/management-center:5.6.0
+    ports:
+      - "8080:8080"
+    networks:
+      - hazelcast-network
+    environment:
+      - HZ_MC_CLUSTER_CONFIG_1_NAME=hello-world
+      - HZ_MC_CLUSTER_CONFIG_1_MEMBER_LIST=hz-node1:5701,hz-node2:5701,hz-node3:5701
 
 networks:
   hazelcast-network:
